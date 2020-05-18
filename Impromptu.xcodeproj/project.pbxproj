@@ -13,6 +13,10 @@
 		4B28F30224708E8E001317FD /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B28F30124708E8E001317FD /* Quote.swift */; };
 		4B28F30524708F4A001317FD /* QuestionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B28F30424708F4A001317FD /* QuestionLabel.swift */; };
 		4B28F307247090C6001317FD /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B28F306247090C6001317FD /* Question.swift */; };
+		4BAE836C24727FF80006F784 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE836B24727FF80006F784 /* ActionButton.swift */; };
+		4BAE83702472808F0006F784 /* ButtonAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE836F2472808F0006F784 /* ButtonAction.swift */; };
+		4BAE83722472BDB80006F784 /* CountdownLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE83712472BDB80006F784 /* CountdownLabel.swift */; };
+		4BAE83742472D2AE0006F784 /* CircularIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE83732472D2AE0006F784 /* CircularIndicator.swift */; };
 		4BFEFD3E246D92F100360363 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFEFD3D246D92F100360363 /* AppDelegate.swift */; };
 		4BFEFD40246D92F100360363 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFEFD3F246D92F100360363 /* SceneDelegate.swift */; };
 		4BFEFD42246D92F100360363 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFEFD41246D92F100360363 /* ViewController.swift */; };
@@ -28,6 +32,10 @@
 		4B28F30124708E8E001317FD /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		4B28F30424708F4A001317FD /* QuestionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionLabel.swift; sourceTree = "<group>"; };
 		4B28F306247090C6001317FD /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		4BAE836B24727FF80006F784 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		4BAE836F2472808F0006F784 /* ButtonAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAction.swift; sourceTree = "<group>"; };
+		4BAE83712472BDB80006F784 /* CountdownLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownLabel.swift; sourceTree = "<group>"; };
+		4BAE83732472D2AE0006F784 /* CircularIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularIndicator.swift; sourceTree = "<group>"; };
 		4BFEFD3A246D92F100360363 /* Impromptu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Impromptu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BFEFD3D246D92F100360363 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BFEFD3F246D92F100360363 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				4B28F2FE24708D7F001317FD /* MyColor.swift */,
+				4BAE836F2472808F0006F784 /* ButtonAction.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -72,6 +81,9 @@
 				4B28F30424708F4A001317FD /* QuestionLabel.swift */,
 				4B171C1D247158B100A70E63 /* TimerPickerView.swift */,
 				4B171C1F247198D700A70E63 /* PlayButton.swift */,
+				4BAE836B24727FF80006F784 /* ActionButton.swift */,
+				4BAE83712472BDB80006F784 /* CountdownLabel.swift */,
+				4BAE83732472D2AE0006F784 /* CircularIndicator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,14 +201,18 @@
 				4BFEFD42246D92F100360363 /* ViewController.swift in Sources */,
 				4BFEFD53246D948A00360363 /* HomeVC.swift in Sources */,
 				4BFEFD55246D950300360363 /* FavoritesTableVC.swift in Sources */,
+				4BAE83702472808F0006F784 /* ButtonAction.swift in Sources */,
 				4B28F307247090C6001317FD /* Question.swift in Sources */,
+				4BAE83742472D2AE0006F784 /* CircularIndicator.swift in Sources */,
 				4B171C1E247158B100A70E63 /* TimerPickerView.swift in Sources */,
+				4BAE83722472BDB80006F784 /* CountdownLabel.swift in Sources */,
 				4B171C20247198D700A70E63 /* PlayButton.swift in Sources */,
 				4BFEFD3E246D92F100360363 /* AppDelegate.swift in Sources */,
 				4BFEFD40246D92F100360363 /* SceneDelegate.swift in Sources */,
 				4B28F30224708E8E001317FD /* Quote.swift in Sources */,
 				4B28F30524708F4A001317FD /* QuestionLabel.swift in Sources */,
 				4B28F2FF24708D7F001317FD /* MyColor.swift in Sources */,
+				4BAE836C24727FF80006F784 /* ActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

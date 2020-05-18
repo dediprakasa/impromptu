@@ -14,10 +14,44 @@ class HomeVC: UIViewController {
     var questionLabel: QuestionLabel!
     let timerPicker = TimerPickerView()
     let playButton = PlayButton()
+    let favoriteButton = ActionButton(type: .favorite)
+    let shuffleButton = ActionButton(type: .next)
+    let buttonStack = UIStackView()
+    var timer = Timer()
+    var counter = 0
+    var topQuestionLabelConstraint = NSLayoutConstraint()
+    var countdownLabel = CountdownLabel()
+    var isTimerRunning = false
+    var circularIndicator = CircularIndicator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureButtonStack()
+        configureButtons()
+        configureCircularIndicator()
         configure()
+    }
+    
+    func configureCountdownLabel() {
+    
+    }
+    
+    func configureCircularIndicator() {
+        print(view.frame.size.height / 2 - 150, "<<")
+        circularIndicator.configure(x: view.frame.size.width / 2, y: view.frame.size.height / 2 - 150)
+    }
+    
+    func configureButtonStack() {
+        buttonStack.addArrangedSubview(favoriteButton)
+        buttonStack.addArrangedSubview(playButton)
+        buttonStack.addArrangedSubview(shuffleButton)
+        buttonStack.distribution = .equalCentering
+        buttonStack.axis = .horizontal
+        buttonStack.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func configureButtons() {
+        playButton.addTarget(self, action: #selector(btnTapped), for: .touchUpInside)
     }
     
     func configure() {
@@ -25,34 +59,73 @@ class HomeVC: UIViewController {
         navigationController?.isNavigationBarHidden = true
         questionLabel = QuestionLabel(text: Question.questions[0])
 
+        view.layer.addSublayer(circularIndicator)
+        view.addSubview(countdownLabel)
         view.addSubview(questionLabel)
         view.addSubview(timerPicker)
-        view.addSubview(playButton)
+        view.addSubview(buttonStack)
+        
+        topQuestionLabelConstraint =  questionLabel.topAnchor.constraint(equalTo:
+            view.safeAreaLayoutGuide.topAnchor, constant: 200)
         
         NSLayoutConstraint.activate([
-            questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
+            countdownLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150),
+            countdownLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            
+            topQuestionLabelConstraint,
             questionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
             questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
             
-            timerPicker.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 200),
+            timerPicker.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -10),
             timerPicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             timerPicker.widthAnchor.constraint(equalToConstant: 150),
             timerPicker.heightAnchor.constraint(equalToConstant: 150),
             
-            playButton.topAnchor.constraint(equalTo: timerPicker.bottomAnchor, constant: 20),
-            playButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playButton.widthAnchor.constraint(equalToConstant: 100),
-            playButton.heightAnchor.constraint(equalToConstant: 100)
+            buttonStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            buttonStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            buttonStack.widthAnchor.constraint(equalToConstant: 250),
+            buttonStack.heightAnchor.constraint(equalToConstant: 100)
             
         ])
         
     }
     
     @objc func btnTapped() {
-        print("ya")
-        let dest = FavoritesTableVC()
+        let minute = timerPicker.selectedRow(inComponent: 0)
+        let second = timerPicker.selectedRow(inComponent: 1)
+        counter = minute * 60 + second
+
+        topQuestionLabelConstraint.constant = 400
+        UIView.animate(withDuration: 1) {
+            self.view.layoutIfNeeded()
+            self.questionLabel.font = UIFont.boldSystemFont(ofSize: 24)
+            self.questionLabel.textAlignment = .center
+            self.timerPicker.alpha = 0
+            self.circularIndicator.isHidden = false
+            self.countdownLabel.setTimer(time: self.counter)
+            if !self.isTimerRunning {
+                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.startCountdown), userInfo: nil, repeats: true)
+                self.isTimerRunning = true
+            }
+        }
         
-        navigationController?.pushViewController(dest, animated: true)
+        
+        
+    
+    }
+    
+    @objc func startCountdown() {
+        print(counter)
+        
+        if counter <= 0 {
+            timer.invalidate()
+            isTimerRunning = false
+        } else {
+            counter -= 1
+            self.countdownLabel.setTimer(time: counter)
+        }
+        
+        
     }
     
     

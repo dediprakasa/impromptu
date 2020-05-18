@@ -21,7 +21,7 @@ class TimerPickerView: UIPickerView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        backgroundColor =÷ .red
+//        backgroundColor = .red
         configure()
     }
     
@@ -34,9 +34,6 @@ class TimerPickerView: UIPickerView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-  
-    
 
 }
 
@@ -48,10 +45,6 @@ extension TimerPickerView: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return data.count
     }
-    
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return String(data[row])
-//    }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 60
