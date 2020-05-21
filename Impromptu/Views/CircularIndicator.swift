@@ -10,23 +10,31 @@ import UIKit
 
 class CircularIndicator: CAShapeLayer {
     
-    override init() {
+    init(color: UIColor) {
         super.init()
-        
+        name = "ci"
         lineWidth = 10
-        fillColor = MyColor.blue2.cgColor
+        fillColor = color.cgColor
         strokeColor = UIColor.white.cgColor
-        isHidden = true
-        
+        isHidden = false
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(x: CGFloat, y: CGFloat) {
+    func configure(x: CGFloat, y: CGFloat, withDuration duration: TimeInterval = 0) {
         let arcCenter = CGPoint(x: x, y: y)
         let circularPath = UIBezierPath(arcCenter: arcCenter, radius: 100, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
         path = circularPath.cgPath
+        
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue = false
+        animation.duration = duration
+        animation.toValue = true
+        
+        add(animation, forKey: "opacity")
     }
+    
+    
 }

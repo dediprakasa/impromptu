@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum MainButtonType {
+    case play, pause
+}
+
 class PlayButton: UIButton {
     
 
@@ -16,8 +20,6 @@ class PlayButton: UIButton {
         setTitle(nil, for: .normal)
         backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 60, weight: .bold, scale: .large)
-        setImage(UIImage(systemName: "timer", withConfiguration: largeConfig)?.withTintColor(MyColor.blue, renderingMode: .alwaysOriginal), for: .normal)
         imageView?.contentMode = .scaleAspectFit
         
     }
@@ -34,6 +36,16 @@ class PlayButton: UIButton {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setIcon(type: MainButtonType, withColor color: UIColor) {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 60, weight: .bold, scale: .large)
+        switch type {
+        case .play:
+            setImage(UIImage(systemName: "play", withConfiguration: largeConfig)?.withTintColor(color, renderingMode: .alwaysOriginal), for: .normal)
+        case .pause:
+            setImage(UIImage(systemName: "pause", withConfiguration: largeConfig)?.withTintColor(color, renderingMode: .alwaysOriginal), for: .normal)
+        }
     }
     
 }

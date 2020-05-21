@@ -27,4 +27,8 @@ class QuestionLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setText(text: String) {
+        self.text = text
+    }
+    
 }
