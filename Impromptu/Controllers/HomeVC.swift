@@ -8,14 +8,23 @@
 
 import UIKit
 
+enum TestError: Error {
+    case joss
+}
+
+protocol HomeVCDelegate: class {
+    func colorGetter(color: UIColor)
+}
+
 class HomeVC: UIViewController {
     
     let btn = UIButton()
     var questionLabel: QuestionLabel!
     let timerPicker = TimerPickerView()
     let playButton = PlayButton()
-    let favoriteButton = ActionButton(type: .favorite)
+    var favoriteButton = ActionButton(type: .favorite)
     let shuffleButton = ActionButton(type: .next)
+    let listButton = ActionButton(type: .list)
     let buttonStack = UIStackView()
     var timer = Timer()
     var counter = 0
@@ -27,11 +36,14 @@ class HomeVC: UIViewController {
     var elapsedTime = 0
     var isPaused = false
     var startCounter = 0
-
+    var questionIndex = Int.random(in: 0..<Question.questions.count)
+    weak var delegate: HomeVCDelegate!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureButtonStack()
         configureButtons()
+        configureFavoriteButton()
         configure()
     }
     
@@ -39,7 +51,17 @@ class HomeVC: UIViewController {
     
     }
     
-    func configureCircularIndicator(withDuration duration: TimeInterval = 0) {
+    func configureFavoriteButton() {
+        if PersistenceManager.getFavorites().contains(questionIndex) {
+            print("ADAA")
+            favoriteButton.setLovedButton(type: .favorited)
+        } else {
+            favoriteButton.setLovedButton(type: .favorite)
+        }
+    }
+    
+    func configureCircularIndicator(withDuration duration: TimeInterval = 0, color: UIColor) {
+        circularIndicator = CircularIndicator(color: color)
         circularIndicator.configure(x: view.frame.size.width / 2, y: view.frame.size.height / 2 - 150, withDuration: duration)
         view.layer.addSublayer(circularIndicator)
     }
@@ -54,16 +76,20 @@ class HomeVC: UIViewController {
     }
     
     func configureButtons() {
+        listButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
         playButton.setIcon(type: .play, withColor: mainColor)
         playButton.addTarget(self, action: #selector(btnTapped), for: .touchUpInside)
         shuffleButton.addTarget(self, action: #selector(shuffleButtonTapped), for: .touchUpInside)
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
     }
     
     func configure() {
+        
         view.backgroundColor = mainColor
         navigationController?.isNavigationBarHidden = true
-        questionLabel = QuestionLabel(text: Question.questions[0])
+        questionLabel = QuestionLabel(text: Question.questions[questionIndex])
         
+        view.addSubview(listButton)
         view.addSubview(countdownLabel)
         view.addSubview(questionLabel)
         view.addSubview(timerPicker)
@@ -73,6 +99,9 @@ class HomeVC: UIViewController {
             view.safeAreaLayoutGuide.topAnchor, constant: 200)
         
         NSLayoutConstraint.activate([
+            listButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            listButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            
             countdownLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150),
             countdownLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             
@@ -95,6 +124,26 @@ class HomeVC: UIViewController {
         
     }
     
+    @objc func favoriteButtonTapped() {
+        print("---+x", questionIndex)
+        PersistenceManager.update(favoriteIndex: questionIndex) { _ in
+            print("---")
+            self.favoriteButton.setLovedButton(type: .favorited)
+            let alert = UIAlertController(title: "Success", message: "Succesfully added", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        }
+        
+    }
+    
+    @objc func listButtonTapped() {
+        let targetVC = FavoritesTableVC()
+        delegate = targetVC
+        delegate.colorGetter(color: mainColor)
+        let navController   = UINavigationController(rootViewController: targetVC)
+        self.present(navController, animated: true)
+    }
+    
     @objc func btnTapped() {
         isTimerRunning = !isTimerRunning
         let duration = TimeInterval(0.3)
@@ -109,9 +158,9 @@ class HomeVC: UIViewController {
                 counter = startCounter
             }
             topQuestionLabelConstraint.constant = 400
-            configureCircularIndicator(withDuration: duration)
+            configureCircularIndicator(withDuration: duration, color: self.mainColor)
+//            circularIndicator.set(withColor: self.mainColor.cgColor)
             UIView.animate(withDuration: duration) {
-                print("00-")
                 self.view.layoutIfNeeded()
                 self.view.bringSubviewToFront(self.countdownLabel)
                 self.questionLabel.font = UIFont.boldSystemFont(ofSize: 24)
@@ -138,6 +187,7 @@ class HomeVC: UIViewController {
         if counter <= 0 {
             timer.invalidate()
             isTimerRunning = false
+            setToIdle()
         } else {
             counter -= 1
             self.countdownLabel.setTimer(time: counter)
@@ -145,9 +195,28 @@ class HomeVC: UIViewController {
         }
     }
     
+    func setToIdle() {
+        isPaused = false
+        let duration = TimeInterval(0.3)
+        topQuestionLabelConstraint.constant = 200
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+            self.playButton.setIcon(type: .play, withColor: self.mainColor)
+            self.questionLabel.font = UIFont.boldSystemFont(ofSize: 36)
+            self.questionLabel.textAlignment = .left
+            self.timerPicker.alpha = 1
+            self.countdownLabel.resetTimer(withDuration: duration)
+            self.view.layer.sublayers?.forEach {
+                if $0.name == "ci" { $0.removeFromSuperlayer() }
+            }
+            self.shuffleButton.alpha = 1
+        }
+    }
+    
     @objc func shuffleButtonTapped() {
-        let qNum = Int.random(in: 0..<Question.questions.count)
-        let question = Question.questions[qNum]
+        configureFavoriteButton()
+        questionIndex = Int.random(in: 0..<Question.questions.count)
+        let question = Question.questions[questionIndex]
         let arrNewColor = UIColor.getNextColor(currentColor: self.view.backgroundColor!)
         mainColor = arrNewColor[0]
         questionLabel.setText(text: question)
@@ -175,7 +244,5 @@ class HomeVC: UIViewController {
         }
         
     }
-    
-
-
 }
+

@@ -39,7 +39,7 @@ class PlayButton: UIButton {
     }
 
     func setIcon(type: MainButtonType, withColor color: UIColor) {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 60, weight: .bold, scale: .large)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold, scale: .large)
         switch type {
         case .play:
             setImage(UIImage(systemName: "play", withConfiguration: largeConfig)?.withTintColor(color, renderingMode: .alwaysOriginal), for: .normal)

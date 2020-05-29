@@ -8,6 +8,10 @@
 
 import Foundation
 
-enum ButtonAction {
-    case favorite, next
+enum ButtonAction: String {
+    case favorite = "heart"
+    case next = "shuffle"
+    case list = "list.dash"
+    case favorited = "heart.fill"
+    case delete = "trash.fill"
 }

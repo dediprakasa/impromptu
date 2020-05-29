@@ -13,10 +13,12 @@
 		4B28F30524708F4A001317FD /* QuestionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B28F30424708F4A001317FD /* QuestionLabel.swift */; };
 		4B28F307247090C6001317FD /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B28F306247090C6001317FD /* Question.swift */; };
 		4B58F5DF2473E01A00F9651E /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B58F5DE2473E01A00F9651E /* UIColor+Extension.swift */; };
+		4B5C0AB9247FE2E400993CB3 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C0AB8247FE2E400993CB3 /* PersistenceManager.swift */; };
 		4BAE836C24727FF80006F784 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE836B24727FF80006F784 /* ActionButton.swift */; };
 		4BAE83702472808F0006F784 /* ButtonAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE836F2472808F0006F784 /* ButtonAction.swift */; };
 		4BAE83722472BDB80006F784 /* CountdownLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE83712472BDB80006F784 /* CountdownLabel.swift */; };
 		4BAE83742472D2AE0006F784 /* CircularIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE83732472D2AE0006F784 /* CircularIndicator.swift */; };
+		4BD5C014248121E00043A66C /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD5C013248121E00043A66C /* FavoriteCell.swift */; };
 		4BFEFD3E246D92F100360363 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFEFD3D246D92F100360363 /* AppDelegate.swift */; };
 		4BFEFD40246D92F100360363 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFEFD3F246D92F100360363 /* SceneDelegate.swift */; };
 		4BFEFD42246D92F100360363 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFEFD41246D92F100360363 /* ViewController.swift */; };
@@ -32,10 +34,12 @@
 		4B28F30424708F4A001317FD /* QuestionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionLabel.swift; sourceTree = "<group>"; };
 		4B28F306247090C6001317FD /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		4B58F5DE2473E01A00F9651E /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		4B5C0AB8247FE2E400993CB3 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		4BAE836B24727FF80006F784 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		4BAE836F2472808F0006F784 /* ButtonAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAction.swift; sourceTree = "<group>"; };
 		4BAE83712472BDB80006F784 /* CountdownLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownLabel.swift; sourceTree = "<group>"; };
 		4BAE83732472D2AE0006F784 /* CircularIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularIndicator.swift; sourceTree = "<group>"; };
+		4BD5C013248121E00043A66C /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		4BFEFD3A246D92F100360363 /* Impromptu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Impromptu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BFEFD3D246D92F100360363 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BFEFD3F246D92F100360363 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 				4BAE836B24727FF80006F784 /* ActionButton.swift */,
 				4BAE83712472BDB80006F784 /* CountdownLabel.swift */,
 				4BAE83732472D2AE0006F784 /* CircularIndicator.swift */,
+				4BD5C013248121E00043A66C /* FavoriteCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -93,6 +98,14 @@
 				4B58F5DE2473E01A00F9651E /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4B5C0AB5247FE2B700993CB3 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				4B5C0AB8247FE2E400993CB3 /* PersistenceManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		4BFEFD31246D92F100360363 = {
@@ -114,6 +127,7 @@
 		4BFEFD3C246D92F100360363 /* Impromptu */ = {
 			isa = PBXGroup;
 			children = (
+				4B5C0AB5247FE2B700993CB3 /* Managers */,
 				4B58F5DD2473E00200F9651E /* Extensions */,
 				4B28F30324708F21001317FD /* Views */,
 				4B28F30024708E7D001317FD /* Models */,
@@ -209,6 +223,7 @@
 				4BFEFD42246D92F100360363 /* ViewController.swift in Sources */,
 				4BFEFD53246D948A00360363 /* HomeVC.swift in Sources */,
 				4BFEFD55246D950300360363 /* FavoritesTableVC.swift in Sources */,
+				4B5C0AB9247FE2E400993CB3 /* PersistenceManager.swift in Sources */,
 				4BAE83702472808F0006F784 /* ButtonAction.swift in Sources */,
 				4B28F307247090C6001317FD /* Question.swift in Sources */,
 				4BAE83742472D2AE0006F784 /* CircularIndicator.swift in Sources */,
@@ -221,6 +236,7 @@
 				4B28F30224708E8E001317FD /* Quote.swift in Sources */,
 				4B28F30524708F4A001317FD /* QuestionLabel.swift in Sources */,
 				4BAE836C24727FF80006F784 /* ActionButton.swift in Sources */,
+				4BD5C014248121E00043A66C /* FavoriteCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

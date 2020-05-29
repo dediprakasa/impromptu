@@ -14,7 +14,14 @@ class CircularIndicator: CAShapeLayer {
         super.init()
         name = "ci"
         lineWidth = 10
-        fillColor = color.cgColor
+        switch color {
+        case UIColor.myRed:
+            fillColor = UIColor.myRed2.cgColor
+        case UIColor.myBlue:
+            fillColor = UIColor.myBlue2.cgColor
+        default:
+            fillColor = UIColor.myGreen2.cgColor
+        }
         strokeColor = UIColor.white.cgColor
         isHidden = false
     }
@@ -34,6 +41,10 @@ class CircularIndicator: CAShapeLayer {
         animation.toValue = true
         
         add(animation, forKey: "opacity")
+    }
+    
+    func set(withColor color: CGColor) {
+        fillColor = color
     }
     
     

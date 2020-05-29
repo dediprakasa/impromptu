@@ -10,15 +10,14 @@ import UIKit
 
 class ActionButton: UIButton {
 
+    var type: ButtonAction!
+    let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
+    
     init(type: ButtonAction) {
         super.init(frame: .zero)
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
-        switch type {
-        case .favorite:
-            setImage(UIImage(systemName: "heart", withConfiguration: largeConfig)?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
-        case .next:
-            setImage(UIImage(systemName: "shuffle", withConfiguration: largeConfig)?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
-        }
+        self.type = type
+        
+        setImage(UIImage(systemName: type.rawValue, withConfiguration: largeConfig)?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
 //        backgroundColor = .red
         imageView?.contentMode = .scaleAspectFill
         translatesAutoresizingMaskIntoConstraints = false
@@ -27,6 +26,13 @@ class ActionButton: UIButton {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setLovedButton(type: ButtonAction) {
+        if type == .favorite || type == .favorited {
+            setImage(UIImage(systemName: type.rawValue, withConfiguration: largeConfig)?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+        }
+    }
+    
     
 
 }
