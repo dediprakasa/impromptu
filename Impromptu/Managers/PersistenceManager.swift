@@ -28,18 +28,17 @@ class PersistenceManager {
         return favoritesIndex
     }
     
-    static func update(favoriteIndex: Int, completion: @escaping ([Int]?) -> Void) {
-        print(defaults.object(forKey: Keys.favorites) as? [Int])
+    static func update(favoriteIndex: Int, type: PersistenceActionType, completion: @escaping ([Int]?) -> Void) {
         var fi = getFavorites()
-        print(fi,"\\\\")
-        if fi.contains(favoriteIndex) {
-            return
+        switch type {
+        case .add:
+            if fi.contains(favoriteIndex) { return }
+            fi.append(favoriteIndex)
+        case .remove:
+            fi.removeAll { $0 == favoriteIndex }
         }
         
-        fi.append(favoriteIndex)
         save(favoritesIndex: fi)
-        print(defaults.object(forKey: Keys.favorites) as? [Int], "???")
-
         completion(fi)
         
     }

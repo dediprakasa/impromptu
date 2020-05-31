@@ -27,7 +27,11 @@ class HomeVC: UIViewController {
     let listButton = ActionButton(type: .list)
     let buttonStack = UIStackView()
     var timer = Timer()
-    var counter = 0
+    var counter = 0 {
+        didSet {
+            print("haaah")
+        }
+    }
     var topQuestionLabelConstraint = NSLayoutConstraint()
     var countdownLabel = CountdownLabel()
     var isTimerRunning = false
@@ -36,11 +40,23 @@ class HomeVC: UIViewController {
     var elapsedTime = 0
     var isPaused = false
     var startCounter = 0
-    var questionIndex = Int.random(in: 0..<Question.questions.count)
+    var questionIndex: Int! {
+        didSet {
+            print("-=-=-=-=")
+        }
+    }
     weak var delegate: HomeVCDelegate!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        configureFavoriteButton()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        questionIndex = Int.random(in: 0..<Question.questions.count)
+        print("----")
         configureButtonStack()
         configureButtons()
         configureFavoriteButton()
@@ -53,7 +69,6 @@ class HomeVC: UIViewController {
     
     func configureFavoriteButton() {
         if PersistenceManager.getFavorites().contains(questionIndex) {
-            print("ADAA")
             favoriteButton.setLovedButton(type: .favorited)
         } else {
             favoriteButton.setLovedButton(type: .favorite)
@@ -125,23 +140,36 @@ class HomeVC: UIViewController {
     }
     
     @objc func favoriteButtonTapped() {
-        print("---+x", questionIndex)
-        PersistenceManager.update(favoriteIndex: questionIndex) { _ in
-            print("---")
-            self.favoriteButton.setLovedButton(type: .favorited)
-            let alert = UIAlertController(title: "Success", message: "Succesfully added", preferredStyle: .alert)
+        var action: PersistenceActionType
+        var message: String
+        var buttonType: ButtonAction
+        
+        if PersistenceManager.getFavorites().contains(questionIndex) {
+            action = .remove
+            message = "Successfully removed from favorites"
+            buttonType = .favorite
+        } else {
+            action = .add
+            message = "Successfully added to favorites"
+            buttonType = .favorited
+        }
+        PersistenceManager.update(favoriteIndex: questionIndex, type: action) { _ in
+            self.favoriteButton.setLovedButton(type: buttonType)
+            let alert = UIAlertController(title: "Success", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(alert, animated: true)
         }
         
+        
     }
     
     @objc func listButtonTapped() {
-        let targetVC = FavoritesTableVC()
-        delegate = targetVC
-        delegate.colorGetter(color: mainColor)
+        let targetVC = FavoritesTableVC(color: mainColor)
+//        delegate = targetVC
+//        delegate.colorGetter(color: mainColor)
         let navController   = UINavigationController(rootViewController: targetVC)
-        self.present(navController, animated: true)
+//        self.present(navController, animated: true)
+        navigationController?.pushViewController(targetVC, animated: true)
     }
     
     @objc func btnTapped() {
@@ -214,8 +242,8 @@ class HomeVC: UIViewController {
     }
     
     @objc func shuffleButtonTapped() {
-        configureFavoriteButton()
         questionIndex = Int.random(in: 0..<Question.questions.count)
+        configureFavoriteButton()
         let question = Question.questions[questionIndex]
         let arrNewColor = UIColor.getNextColor(currentColor: self.view.backgroundColor!)
         mainColor = arrNewColor[0]
@@ -245,4 +273,6 @@ class HomeVC: UIViewController {
         
     }
 }
+
+
 

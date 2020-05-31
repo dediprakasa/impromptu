@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol FavoriteCellDelegate: class {
+    func deleteFavorite(questionIndex: Int)
+}
+
 class FavoriteCell: UITableViewCell {
     
     static let reuseID = "favorites"
     let label = UILabel()
     let container = UIView()
     let deleteButton = ActionButton(type: .delete)
+    var questionIndex: Int?
+    var delegate: FavoriteCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,6 +36,8 @@ class FavoriteCell: UITableViewCell {
         label.numberOfLines = 0
         label.sizeToFit()
         label.translatesAutoresizingMaskIntoConstraints = false
+        
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         
         container.addSubview(label)
         container.addSubview(deleteButton)
@@ -51,13 +59,18 @@ class FavoriteCell: UITableViewCell {
         
     }
     
-    func set(text: String, color: UIColor) {
+    func set(text: String, color: UIColor, questionIndex: Int) {
         label.text = text
         container.backgroundColor = color
+        self.questionIndex = questionIndex
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func deleteButtonTapped() {
+        delegate?.deleteFavorite(questionIndex: questionIndex!)
     }
     
 }
